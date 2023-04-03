@@ -28,11 +28,6 @@ Qualtrics.SurveyEngine.addOnload(function()
 					alert("Tests may not be scheduled on weekends, please enter another date to continue. Click on OK to modify the date.");
 					$('NextButton').disabled = true;
 				}*/
-				else if(dt.getUTCDay() == 0) //Sunday
-				{
-					alert("Tests may not be scheduled on Sundays, please enter another date to continue. Click on OK to modify the date.");
-					$('NextButton').disabled = true;
-				}
 				else if ( (yr<y1) || (mnth+1<mm) || (mnth+1==mm && dy<dd) || (mnth+1>mm && yr<y1) )
 				{
 					alert("Tests cannot be scheduled in the past. Click on OK to modify the date.");
