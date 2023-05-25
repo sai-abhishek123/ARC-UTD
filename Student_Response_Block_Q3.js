@@ -20,25 +20,29 @@ Qualtrics.SurveyEngine.addOnload(function()
 				var dt = new Date(yr,mnth,dy);
 				if(dt.getUTCMonth() != mnth || dt.getUTCFullYear() != yr || dt.getUTCDate() != dy)
 				{
-					alert("Please enter a valid date");
+					alert("Please enter a valid date. Click on OK to modify the date.");
 					$('NextButton').disabled = true;
 				}
 				else if(dt.getUTCDay() == 6 || dt.getUTCDay() == 0)
 				{
-					alert("Tests may not be scheduled on weekends, please enter another date to continue.");
+					alert("Tests may not be scheduled on weekends, please enter another date to continue. Click on OK to modify the date.");
 					$('NextButton').disabled = true;
 				}
 				else if ( (yr<y1) || (mnth+1<mm) || (mnth+1==mm && dy<dd) || (mnth+1>mm && yr<y1) )
 				{
-					alert("Tests cannot be scheduled in the past.");
+					alert("Tests cannot be scheduled in the past. Click on OK to modify the date.");
 					$('NextButton').disabled = true;
 				}
-				else if ( (mnth+1==5 && dy>=16 && yr>=y1) || (mnth+1>=6 && yr==y1) || (yr>y1) )
+				else if ( (mnth+1==8 && dy>=14 && yr>=y1) || (mnth+1>=9 && yr==y1) || (yr>y1) )
 				{
-					alert("Please select a valid date within the semester to continue.");
+					alert("Please select a valid date within the semester to continue. Click on OK to modify the date.");
 					$('NextButton').disabled = true;
 				}
-				
+				else if( (mnth+1 == 7 && dy == 4) || (mnth+1 == 6 && dy == 19) || (mnth+1==5 && dy == 29))
+				{
+					alert("The university is closed on the selected date. Please choose another date. Click on OK to modify the date.");
+					$('NextButton').disabled = true;
+				}
 				else
 				{
 					$('NextButton').disabled = false;
@@ -46,13 +50,13 @@ Qualtrics.SurveyEngine.addOnload(function()
 			}
 			catch(error)
 			{
-				alert("Please enter a valid date.");
+				alert("Please enter a valid date. Click on OK to modify the date.");
 				$('NextButton').disabled = true;
 			}
 		}
 		else
 		{
-			alert("Please enter a valid date.");
+			//alert("Please enter a valid date.");
 			$('NextButton').disabled = true;
 		}
 });
