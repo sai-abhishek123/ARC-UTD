@@ -1,5 +1,5 @@
 var count = 0, new_time_display, student_test_start_time;
-function alert_message_popup(checking,new_final_date,student_test_start_time) {
+function alert_message_popup(checking, new_final_date, student_test_start_time) {
     if (checking == 4) {
         var alert = "Cannot schedule test when ARC is closed";
         count++;
@@ -124,133 +124,19 @@ Qualtrics.SurveyEngine.addOnload(function () {
     if (checker.includes(with_without_check)) {
         var new_time = "${e://Field/StudentInputTimeGivenToClassforTest}";
         var checking = recalculate_duration(new_time, student_accoms, student_test_start_time, new_final_date);
-        alert_message_popup(checking,new_final_date,student_test_start_time);
-        // if (checking == 1) {
-        //     var alert = "Tests on Friday cannot end after 3 PM. Please click Continue and Back to change the start time and/or duration.";
-        //     count++;
-        //     Swal.fire({
-        //         text: alert,
-        //         confirmButtonText: 'Continue'
-        //     });
-        // }
-        // else if (checking == 5) {
-        //     var alert = "Enter a valid time";
-        //     count++;
-        //     Swal.fire({
-        //         text: alert,
-        //         confirmButtonText: 'Continue'
-        //     });
-        // }
-        // else if (checking == 2) {
-        //     var alert = "Tests on weekdays cannot end after 5 PM. Please click Continue and Back to change the start time and/or duration.";
-        //     count++;
-        //     Swal.fire({
-        //         text: alert,
-        //         confirmButtonText: 'Continue'
-        //     });
-        // }
-        // else {
-        //     var alert = "Exam for Course has been scheduled on " + new_final_date + ",which starts at " + student_test_start_time + " and ends at " + checking + ". Please click on Next to continue.";
-        //     Swal.fire({
-        //         text: alert,
-        //         confirmButtonText: 'Next'
-        //     });
-        //     Qualtrics.SurveyEngine.setEmbeddedData("StudInputStartTime", student_test_start_time);
-        //     Qualtrics.SurveyEngine.setEmbeddedData("Student_Final_End_Time", checking);
-        // }
+        alert_message_popup(checking, new_final_date, student_test_start_time);
     }
     else {
         if (out.includes(check_changed_start_time)) {
             student_test_start_time = "${q://QID57/ChoiceTextEntryValue/3}";
             var new_time = "${e://Field/StudentInputTimeGivenToClassforTest}";
             var checking = recalculate_duration(new_time, student_accoms, student_test_start_time, new_final_date);
-            alert_message_popup(checking,new_final_date,student_test_start_time);
-            // if (checking == 4) {
-            //     var alert = "Cannot schedule test when ARC is closed";
-            //     count++;
-            //     Swal.fire({
-            //         text: alert,
-            //         confirmButtonText: 'Continue'
-            //     });
-            // }
-            // else if (checking == 5) {
-            //     var alert = "Enter a valid time";
-            //     count++;
-            //     Swal.fire({
-            //         text: alert,
-            //         confirmButtonText: 'Continue'
-            //     });
-            // }
-            // else if (checking == 1) {
-            //     var alert = "Tests on Friday cannot end after 3 PM. Please click Continue and Back to change the start time and/or duration.";
-            //     count++;
-            //     Swal.fire({
-            //         text: alert,
-            //         confirmButtonText: 'Continue'
-            //     });
-            // }
-            // else if (checking == 2) {
-            //     var alert = "Tests on weekdays cannot end after 5 PM. Please click Continue and Back to change the start time and/or duration.";
-            //     count++;
-            //     Swal.fire({
-            //         text: alert,
-            //         confirmButtonText: 'Continue'
-            //     });
-            // }
-            // else {
-            //     var alert = "Exam for Course has been scheduled on " + new_final_date + ",which starts at " + student_test_start_time + " and ends at " + checking + ". Please click on Next to continue.";
-            //     Swal.fire({
-            //         text: alert,
-            //         confirmButtonText: 'Next'
-            //     });
-            //     Qualtrics.SurveyEngine.setEmbeddedData("StudInputStartTime", student_test_start_time);
-            //     Qualtrics.SurveyEngine.setEmbeddedData("Student_Final_End_Time", checking);
-            // }
+            alert_message_popup(checking, new_final_date, student_test_start_time);
         }
         if (out.includes(test_date)) {
             var new_time = "${q://QID57/ChoiceTextEntryValue/2}";
             var checking = recalculate_duration(new_time, student_accoms, student_test_start_time, new_final_date);
-            alert_message_popup(checking,new_final_date,student_test_start_time);
-            // if (checking == 4) {
-            //     var alert = "Cannot schedule test when ARC is closed";
-            //     count++;
-            //     Swal.fire({
-            //         text: alert,
-            //         confirmButtonText: 'Continue'
-            //     });
-            // }
-            // else if (checking == 5) {
-            //     var alert = "Enter a valid time";
-            //     count++;
-            //     Swal.fire({
-            //         text: alert,
-            //         confirmButtonText: 'Continue'
-            //     });
-            // }
-            // else if (checking == 1) {
-            //     var alert = "Tests on Friday cannot end after 3 PM. Please click Next and Back to change the start time and/or duration.";
-            //     count++;
-            //     Swal.fire({
-            //         text: alert,
-            //         confirmButtonText: 'Continue'
-            //     });
-            // }
-            // else if (checking == 2) {
-            //     var alert = "Tests on weekdays cannot end after 5 PM. Please click Continue and Back to change the start time and/or duration.";
-            //     count++;
-            //     Swal.fire({
-            //         text: alert,
-            //         confirmButtonText: 'Continue'
-            //     });
-            // }
-            // else {
-            //     var alert = "Exam for Course has been scheduled on " + new_final_date + ",which starts at " + student_test_start_time + " and ends at " + checking + ". Please click on Next to continue.";
-            //     Swal.fire({
-            //         text: alert,
-            //         confirmButtonText: 'Next'
-            //     });
-            //     Qualtrics.SurveyEngine.setEmbeddedData("Student_Final_End_Time", checking);
-            // }
+            alert_message_popup(checking, new_final_date, student_test_start_time);
         }
     }
 });
