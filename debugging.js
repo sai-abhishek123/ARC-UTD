@@ -1,4 +1,4 @@
-var count = 0, count1 = 0, count2 = 0, new_time_display, student_test_start_time, checking;
+var count = 0, count1 = 0, new_time_display, student_test_start_time;
 function date_validator(date_modified) {
     var date_1 = date_modified.split(" ").join("");
     var today = new Date();
@@ -14,40 +14,29 @@ function date_validator(date_modified) {
         if (dt.getUTCMonth() != mnth || dt.getUTCFullYear() != yr || dt.getUTCDate() != dy) {
             alert("Please enter a valid date. Click on OK to modify the date.");
             count1 = 404;
-            count2++;
-            count++;
             $('NextButton').disabled = true;
-            return count1;
         }
         else if (dt.getUTCDay() == 6 || dt.getUTCDay() == 0) {
             alert("Tests may not be scheduled on weekends, please enter another date to continue. Click on OK to modify the date.");
             count1 = 404;
-            count2++;
-            count++;
             $('NextButton').disabled = true;
             return count1;
         }
         else if ((yr < y1) || (mnth + 1 < mm) || (mnth + 1 == mm && dy < dd) || (mnth + 1 > mm && yr < y1)) {
             alert("Tests cannot be scheduled in the past. Click on OK to modify the date.");
             count1 = 404;
-            count2++;
-            count++;
             $('NextButton').disabled = true;
             return count1;
         }
         else if ((mnth + 1 == 8 && dy >= 10 && yr >= y1) || (mnth + 1 >= 9 && yr == y1) || (yr > y1)) {
             alert("Please select a valid date within the semester to continue. Click on OK to modify the date.");
             count1 = 404;
-            count2++;
-            count++;
             $('NextButton').disabled = true;
             return count1;
         }
         else if ((mnth + 1 == 7 && dy == 4) || (mnth + 1 == 6 && dy == 19) || (mnth + 1 == 5 && dy == 29)) {
             alert("The university is closed on the selected date. Please choose another date. Click on OK to modify the date.");
             count1 = 404;
-            count2++;
-            count++;
             $('NextButton').disabled = true;
             return count1;
         }
@@ -189,7 +178,7 @@ Qualtrics.SurveyEngine.addOnload(function () {
         var date_modified, checking;
         if (checker.includes(with_without_check)) {
             var new_time = "${e://Field/StudentInputTimeGivenToClassforTest}";
-            checking = recalculate_duration(new_time, student_accoms, student_test_start_time, new_final_date);
+            var checking = recalculate_duration(new_time, student_accoms, student_test_start_time, new_final_date);
             alert_message_popup(checking, new_final_date, student_test_start_time);
         }
         else {
@@ -200,7 +189,9 @@ Qualtrics.SurveyEngine.addOnload(function () {
                     var new_time = "${e://Field/StudentInputTimeGivenToClassforTest}";
                     if (new_final_date != 404) {
                         checking = recalculate_duration(new_time, student_accoms, student_test_start_time, new_final_date);
+                        console.log(new_final_date);
                         if (new_final_date != undefined) {
+                            alert_message_popup(checking, new_final_date, student_test_start_time);
                             Qualtrics.SurveyEngine.setEmbeddedData("StudInputTestDate", new_final_date);
                             Qualtrics.SurveyEngine.setEmbeddedData("ProfInputTestDate", new_final_date);
                         }
@@ -213,48 +204,49 @@ Qualtrics.SurveyEngine.addOnload(function () {
                     if (error instanceof TypeError) {
                         alert("Please enter a valid date");
                         $('NextButton').disabled = true;
-                        count2++;
+                    }
+                }
+            }
+            if (date_validator(new_final_date) != 404) {
+                if (out.includes(check_changed_start_time)) {
+                    try {
+                        student_test_start_time = "${q://QID57/ChoiceTextEntryValue/3}";
+                        var new_time = "${e://Field/StudentInputTimeGivenToClassforTest}";
+                        checking = recalculate_duration(new_time, student_accoms, student_test_start_time, new_final_date);
+                        alert_message_popup(checking, new_final_date, student_test_start_time);
+                    }
+                    catch (error) {
+                        alert("Change the time");
                         count++;
                     }
                 }
             }
-            if (count2 == 0) {
-                if (date_validator(new_final_date) != 404) {
-                    if (out.includes(check_changed_start_time)) {
-                        student_test_start_time = "${q://QID57/ChoiceTextEntryValue/3}";
-                        var timeregex = /^(0?[1-9]|1[0-2]):[0-5][0-9] [AP]M$/;
-                        if (!timeregex.test(student_test_start_time)) {
-                            throw (error);
-                            count1 = 404;
-                            count2++;
-                            count++;
-                            // $('NextButton').disabled = true;
-                        }
-                        else {
-                            var new_time = "${e://Field/StudentInputTimeGivenToClassforTest}";
-                            checking = recalculate_duration(new_time, student_accoms, student_test_start_time, new_final_date);
-                        }
-                    }
-                }
-            }
-            if (count2 == 0) {
-                if (date_validator(new_final_date) != 404) {
-                    if (out.includes(check_changed_total_time_allowed)) {
+            if (date_validator(new_final_date) != 404) {
+                if (out.includes(check_changed_total_time_allowed)) {
+                    try {
                         var new_time = "${q://QID57/ChoiceTextEntryValue/2}";
                         checking = recalculate_duration(new_time, student_accoms, student_test_start_time, new_final_date);
+                        alert_message_popup(checking, new_final_date, student_test_start_time);
+                    }
+                    catch (error) {
+                        alert("Please check block 3");
+                        count++;
                     }
                 }
             }
-            if (new_final_date != 404 || checking != undefined) {
-                console.log("dumm");
+            else {
+                var new_time = "${e://Field/StudentInputTimeGivenToClassforTest}";
+                checking = recalculate_duration(new_time, student_accoms, student_test_start_time, new_final_date);
                 alert_message_popup(checking, new_final_date, student_test_start_time);
             }
         }
     }
     catch (error) {
-        alert("Please enter the time in HH:MM AM/PM.");
-        count++;
-        $('NextButton').disabled = true;
+        if (error instanceof TypeError) {
+            alert("Please check the errors");
+            count++;
+            $('NextButton').disabled = true;
+        }
     }
 });
 
