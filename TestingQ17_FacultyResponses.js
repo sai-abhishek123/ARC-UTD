@@ -228,7 +228,6 @@ Qualtrics.SurveyEngine.addOnload(function () {
                             count1 = 404;
                             count2++;
                             count++;
-                            // $('NextButton').disabled = true;
                         }
                         else {
                             var new_time = "${e://Field/StudentInputTimeGivenToClassforTest}";
