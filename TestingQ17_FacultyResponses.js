@@ -228,7 +228,6 @@ Qualtrics.SurveyEngine.addOnload(function () {
                             count1 = 404;
                             count2++;
                             count++;
-                            // $('NextButton').disabled = true;
                         }
                         else {
                             var new_time = "${e://Field/StudentInputTimeGivenToClassforTest}";
@@ -246,7 +245,6 @@ Qualtrics.SurveyEngine.addOnload(function () {
                 }
             }
             if (new_final_date != 404 || checking != undefined) {
-                console.log("dumm");
                 alert_message_popup(checking, new_final_date, student_test_start_time);
             }
         }
