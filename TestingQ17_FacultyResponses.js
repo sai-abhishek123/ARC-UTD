@@ -13,6 +13,10 @@ function date_validator(date_modified) {
             var mnth = parseInt(darr[0]) - 1;
             var dy = parseInt(darr[1]);
             var dt = new Date(yr, mnth, dy);
+            var less = new Date();
+            var today1 = new Date(y1, mm, dd);
+            var three_days_check = new Date();
+            three_days_check.setDate(today1.getDate() + 3);
             if (dt.getUTCMonth() != mnth || dt.getUTCFullYear() != yr || dt.getUTCDate() != dy) {
                 alert("Please enter a valid date. Click on OK to modify the date.");
                 count1 = 404;
@@ -51,6 +55,13 @@ function date_validator(date_modified) {
                 count++;
                 return count1;
             }
+            else if (dt < three_days_check) {
+                alert("We are sorry but date changes cannot be accepted without 3 days notice. Please enter a date at least 3 days from today or leave the date as is. Click on OK to modify the date.");
+                count1 = 404;
+                count2++;
+                count++;
+                return count1;
+            }
             else {
                 return date_1;
             }
@@ -80,11 +91,7 @@ function alert_message_popup(student_test_end_time, new_final_date, student_test
         count++;
     }
     else if (student_test_end_time == 1) {
-        window.alert("Tests must end by 5pm Mon-Thrs and 3pm on Friday, please click Continue and then click Back twice, to return to the screen where you may select a different start time.");
-        count++;
-    }
-    else if (student_test_end_time == 2) {
-        window.alert("Tests must end by 5pm Mon-Thrs and 3pm on Friday, please click Continue and then click Back twice, to return to the screen where you may select a different start time.");
+        window.alert("Tests must end by 5 PM Monday-Thursday and 3 PM on Friday. Please click OK to return to the screen where you may select a different start time.");
         count++;
     }
     else {
@@ -164,11 +171,8 @@ function recalculate_duration(new_time, selected_student_accommodations, student
     var new_mins_display = new_total_mins.toString().padStart(2, '0');
     var new_time_display = new_hrs_display + ':' + new_mins_display + ' ' + ampm;
     var new_date_split = new Date(new_final_date);
-    if (new_date_split.getUTCDay() == 5 && ((new_th1_display >= 15 && new_mins_display >= 1) || (new_th1_display > 15))) {
+    if (new_date_split.getUTCDay() == 5 && ((new_th1_display >= 15 && new_mins_display >= 1) || (new_th1_display > 15)) || (new_date_split.getUTCDay() >= 1 && new_date_split.getUTCDay() <= 4) && (new_th1_display >= 17 && new_mins_display >= 1 || (new_th1_display > 17))) {
         return 1;
-    }
-    else if ((new_date_split.getUTCDay() >= 1 && new_date_split.getUTCDay() <= 4) && (new_th1_display >= 17 && new_mins_display >= 1 || (new_th1_display > 17))) {
-        return 2;
     }
     else {
         return new_time_display;
@@ -179,7 +183,7 @@ Qualtrics.SurveyEngine.addOnload(function () {
     try {
         var with_without_check = "${q://QID30/ChoiceGroup/SelectedChoices}";
         var checker = "Professor/instructor approves <u><strong>without</strong></u> changes";
-        var out = "${q://QID57/ChoiceGroup/SelectedChoices}";
+        var changes_to_time_date = "${q://QID57/ChoiceGroup/SelectedChoices}";
         var selected_student_accommodations = "${e://Field/StudInputAccomms}";
         var student_test_start_time = "${e://Field/Student_Another_Time_Field}";
         var new_final_date = "${e://Field/Student_Another_Date_Field}";
@@ -193,7 +197,7 @@ Qualtrics.SurveyEngine.addOnload(function () {
             alert_message_popup(student_test_end_time, new_final_date, student_test_start_time);
         }
         else {
-            if (out.includes(check_changed_exam_date)) {
+            if (changes_to_time_date.includes(check_changed_exam_date)) {
                 try {
                     date_modified = "${q://QID57/ChoiceTextEntryValue/1}";
                     new_final_date = date_validator(date_modified);
@@ -215,7 +219,7 @@ Qualtrics.SurveyEngine.addOnload(function () {
                     count++;
                 }
             }
-            if (out.includes(check_changed_start_time)) {
+            if (changes_to_time_date.includes(check_changed_start_time)) {
                 if (count2 == 0) {
                     if (date_validator(new_final_date) != 404) {
                         try {
@@ -233,7 +237,7 @@ Qualtrics.SurveyEngine.addOnload(function () {
                             }
                         }
                         catch (error) {
-                            alert("Please enter time in HH:MM AM/PM format");
+                            alert("Please enter time in HH:MM AM/PM format.");
                             student_test_end_time = undefined;
                             count++;
                         }
@@ -242,7 +246,7 @@ Qualtrics.SurveyEngine.addOnload(function () {
             }
             if (count2 == 0) {
                 if (date_validator(new_final_date) != 404) {
-                    if (out.includes(check_changed_total_time_allowed)) {
+                    if (changes_to_time_date.includes(check_changed_total_time_allowed)) {
                         var new_time = "${q://QID57/ChoiceTextEntryValue/2}";
                         student_test_end_time = recalculate_duration(new_time, selected_student_accommodations, student_test_start_time, new_final_date);
                     }
