@@ -1,0 +1,55 @@
+.swal2-popup {
+    font-family: 'Poppins', 'Arial', 'Gill Sans', 'Gill Sans MT', 'Calibri', 'Trebuchet MS', sans-serif, serif;
+}
+
+/* Common styles */
+.custom-tooltip {
+    position: relative;
+    visibility: hidden;
+    background-color: #FFF;
+    color: #333;
+    padding: 15px 20px;
+    border-radius: 5px;
+    z-index: 9999;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: normal;
+    margin-bottom: 10px;
+    font-size: 15px;
+    border: 1px solid #ccc;
+    word-wrap: break-word;
+    max-width: 1200px; /* Set maximum width for both text and image tooltips */
+}
+
+/* Styles specific to text tooltip */
+/* .text-tooltip { */
+    /* Add any specific styles for the text tooltip here */
+/* } */
+
+/* Styles specific to image tooltip */
+/* .image-tooltip { */
+    /* Add any specific styles for the image tooltip here */
+/* } */
+
+/* Styling for the tooltip trigger element */
+.tooltip {
+    position: relative;
+    cursor: pointer;
+}
+.tooltip:hover .custom-tooltip {
+    visibility: visible; /* Show the tooltip on hover */
+    opacity: 1; /* Make the tooltip opaque on hover */
+}
+
+/* Adjustments for the image in the tooltip */
+.custom-tooltip img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Additional spacing between tooltip text and the image (if they're in the same tooltip) */
+.custom-tooltip p {
+    margin-bottom: 10px;
+}
