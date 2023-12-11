@@ -13,7 +13,6 @@ function date_validator(date_modified) {
             var mnth = parseInt(darr[0]) - 1;
             var dy = parseInt(darr[1]);
             var dt = new Date(yr, mnth, dy);
-            var less = new Date();
             var today1 = new Date(y1, mm, dd);
             var three_days_check = new Date();
             three_days_check.setDate(today1.getDate() + 3);
@@ -175,7 +174,7 @@ function recalculate_duration(new_time, selected_student_accommodations, student
         return 1;
     }
     else {
-        return new_time_display;
+        return new_time_display;    
     }
 }
 Qualtrics.SurveyEngine.addOnload(function () {
